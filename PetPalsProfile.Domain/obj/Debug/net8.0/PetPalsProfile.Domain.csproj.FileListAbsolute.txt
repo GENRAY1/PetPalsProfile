@@ -1,0 +1,11 @@
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.Domain\bin\Debug\net8.0\PetPalsProfile.Domain.deps.json
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.Domain\bin\Debug\net8.0\PetPalsProfile.Domain.dll
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.Domain\bin\Debug\net8.0\PetPalsProfile.Domain.pdb
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.Domain\obj\Debug\net8.0\PetPalsProfile.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.Domain\obj\Debug\net8.0\PetPalsProfile.Domain.AssemblyInfoInputs.cache
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.Domain\obj\Debug\net8.0\PetPalsProfile.Domain.AssemblyInfo.cs
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.Domain\obj\Debug\net8.0\PetPalsProfile.Domain.csproj.CoreCompileInputs.cache
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.Domain\obj\Debug\net8.0\PetPalsProfile.Domain.dll
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.Domain\obj\Debug\net8.0\refint\PetPalsProfile.Domain.dll
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.Domain\obj\Debug\net8.0\PetPalsProfile.Domain.pdb
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.Domain\obj\Debug\net8.0\ref\PetPalsProfile.Domain.dll

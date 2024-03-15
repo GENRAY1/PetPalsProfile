@@ -1,0 +1,6 @@
+@PetPalsProfile.API_HostAddress = http://localhost:5028
+
+GET {{PetPalsProfile.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

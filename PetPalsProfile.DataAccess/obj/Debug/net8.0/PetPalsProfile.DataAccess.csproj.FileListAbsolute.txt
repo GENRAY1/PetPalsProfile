@@ -1,0 +1,17 @@
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\bin\Debug\net8.0\PetPalsProfile.DataAccess.deps.json
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\bin\Debug\net8.0\PetPalsProfile.DataAccess.runtimeconfig.json
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\bin\Debug\net8.0\PetPalsProfile.DataAccess.dll
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\bin\Debug\net8.0\PetPalsProfile.DataAccess.pdb
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\bin\Debug\net8.0\PetPalsProfile.Domain.dll
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\bin\Debug\net8.0\PetPalsProfile.Domain.pdb
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\obj\Debug\net8.0\PetPalsProfile.DataAccess.csproj.AssemblyReference.cache
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\obj\Debug\net8.0\PetPalsProfile.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\obj\Debug\net8.0\PetPalsProfile.DataAccess.AssemblyInfoInputs.cache
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\obj\Debug\net8.0\PetPalsProfile.DataAccess.AssemblyInfo.cs
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\obj\Debug\net8.0\PetPalsProfile.DataAccess.csproj.CoreCompileInputs.cache
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\obj\Debug\net8.0\PetPalsProfile.DataAccess.csproj.CopyComplete
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\obj\Debug\net8.0\PetPalsProfile.DataAccess.dll
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\obj\Debug\net8.0\refint\PetPalsProfile.DataAccess.dll
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\obj\Debug\net8.0\PetPalsProfile.DataAccess.pdb
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\obj\Debug\net8.0\PetPalsProfile.DataAccess.genruntimeconfig.cache
+D:\Education\PetProjects\PetPalsProfile\PetPalsProfile.DataAccess\obj\Debug\net8.0\ref\PetPalsProfile.DataAccess.dll

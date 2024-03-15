@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "PetPalsProfile.Application/1.0.0": {
+        "dependencies": {
+          "PetPalsProfile.Domain": "1.0.0"
+        },
+        "runtime": {
+          "PetPalsProfile.Application.dll": {}
+        }
+      },
+      "PetPalsProfile.Domain/1.0.0": {
+        "runtime": {
+          "PetPalsProfile.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "PetPalsProfile.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PetPalsProfile.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
