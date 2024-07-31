@@ -10,7 +10,7 @@ public static class DependencyInjection
         {
             configuration.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
         });
-
+    
         return services;
     }
 }
