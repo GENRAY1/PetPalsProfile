@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace PetPalsProfile.Infrastructure;
+namespace PetPalsProfile.Infrastructure.Database;
 public sealed class ApplicationDbContext : DbContext
 {
 	private static readonly JsonSerializerSettings JsonSerializerSettings = new()
