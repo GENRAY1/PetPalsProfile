@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace PetPalsProfile.Infrastructure.Database.Migrations
+namespace PetPalsProfile.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -31,7 +31,7 @@ namespace PetPalsProfile.Infrastructure.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "user_account",
+                name: "account",
                 schema: "identity",
                 columns: table => new
                 {
@@ -45,9 +45,9 @@ namespace PetPalsProfile.Infrastructure.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_user_account", x => x.id);
+                    table.PrimaryKey("pk_account", x => x.id);
                     table.ForeignKey(
-                        name: "fk_user_account_role_role_id",
+                        name: "fk_account_role_role_id",
                         column: x => x.role_id,
                         principalSchema: "identity",
                         principalTable: "role",
@@ -66,9 +66,9 @@ namespace PetPalsProfile.Infrastructure.Database.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_user_account_role_id",
+                name: "ix_account_role_id",
                 schema: "identity",
-                table: "user_account",
+                table: "account",
                 column: "role_id");
         }
 
@@ -76,7 +76,7 @@ namespace PetPalsProfile.Infrastructure.Database.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "user_account",
+                name: "account",
                 schema: "identity");
 
             migrationBuilder.DropTable(

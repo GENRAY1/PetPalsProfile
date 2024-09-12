@@ -1,21 +1,22 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using PetPalsProfile.Domain.Accounts;
 using PetPalsProfile.Domain.UserAccounts;
 
 namespace PetPalsProfile.Infrastructure.Database.Configurations;
 
-public class UserAccountConfiguration : IEntityTypeConfiguration<UserAccount>
+public class AccountConfiguration : IEntityTypeConfiguration<Account>
 {
-    public void Configure(EntityTypeBuilder<UserAccount> builder)
+    public void Configure(EntityTypeBuilder<Account> builder)
     {
         builder.HasKey(u => u.Id);
 
         builder.Property(u => u.Username)
-            .HasMaxLength(UserAccount.MaxUserNameLength);
+            .HasMaxLength(Account.MaxUserNameLength);
         
         builder.Property(u => u.Email)
             .IsRequired()
-            .HasMaxLength(UserAccount.MaxEmailLength);
+            .HasMaxLength(Account.MaxEmailLength);
         
         builder.Property(u => u.PasswordHash)
             .IsRequired();
