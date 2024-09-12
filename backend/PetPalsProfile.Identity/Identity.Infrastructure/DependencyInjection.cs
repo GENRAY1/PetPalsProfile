@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using PetPalsProfile.Domain.Absractions;
+using PetPalsProfile.Domain.Accounts;
 using PetPalsProfile.Domain.UserAccounts;
 using PetPalsProfile.Infrastructure.Authentication;
 using PetPalsProfile.Infrastructure.Database;
@@ -35,7 +36,7 @@ public static class DependencyInjection
         
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         
-        services.AddScoped<IUserAccountRepository, UserAccountRepository>();
+        services.AddScoped<IAccountRepository, AccountRepository>();
     }
     
     private static void AddAuthentication(IServiceCollection services, IConfiguration configuration)

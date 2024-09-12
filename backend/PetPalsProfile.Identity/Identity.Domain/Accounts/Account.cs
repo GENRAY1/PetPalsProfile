@@ -1,0 +1,34 @@
+using PetPalsProfile.Domain.Absractions;
+using PetPalsProfile.Domain.UserAccounts;
+
+namespace PetPalsProfile.Domain.Accounts;
+
+public class Account : Entity
+{
+    public const int MaxEmailLength = 256;
+    public const int MaxPasswordLength = 64;
+    public const int MinPasswordLength = 6;
+    public const int MinUserNameLength = 6;
+    public const int MaxUserNameLength = 32;
+
+    private Account(Guid id) : base(id) { }
+    public string? Username { get; private set; }
+    public string Email { get; private set; }
+    public string PasswordHash { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+    public DateTime? UpdatedAt { get; private set; }
+    public Guid RoleId { get; private set; }
+    public Role Role { get; private set; }
+
+    public static Account Create(string email, string passwordHash, string? username)
+    {
+        return new Account(Guid.NewGuid())
+        {
+            Email = email,
+            PasswordHash = passwordHash,
+            CreatedAt = DateTime.UtcNow,
+            RoleId = Role.User.Id,
+            Username = username
+        };
+    }
+}
