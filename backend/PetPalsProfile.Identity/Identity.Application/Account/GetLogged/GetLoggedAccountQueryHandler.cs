@@ -1,15 +1,16 @@
 using MediatR;
+using PetPalsProfile.Domain.Accounts;
 using PetPalsProfile.Domain.UserAccounts;
 
 namespace PetPalsProfile.Application.Account.GetLogged;
 
 public class GetLoggedAccountQueryHandler(
-    IUserAccountRepository userAccountRepository)
+    IAccountRepository accountRepository)
     :IRequestHandler<GetLoggedAccountQuery, GetLoggedAccountResponse>
 {
     public async Task<GetLoggedAccountResponse> Handle(GetLoggedAccountQuery request, CancellationToken cancellationToken)
     {
-        var userAccount = await userAccountRepository
+        var userAccount = await accountRepository
             .GetById(request.AccountId, cancellationToken);
         
         if(userAccount is null)

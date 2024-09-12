@@ -8,7 +8,7 @@ using PetPalsProfile.Infrastructure.Database;
 
 #nullable disable
 
-namespace PetPalsProfile.Infrastructure.Database.Migrations
+namespace PetPalsProfile.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -23,7 +23,51 @@ namespace PetPalsProfile.Infrastructure.Database.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("PetPalsProfile.Domain.Roles.Role", b =>
+            modelBuilder.Entity("PetPalsProfile.Domain.Accounts.Account", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("email");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("role_id");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("Username")
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("username");
+
+                    b.HasKey("Id")
+                        .HasName("pk_account");
+
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_account_role_id");
+
+                    b.ToTable("account", "identity");
+                });
+
+            modelBuilder.Entity("PetPalsProfile.Domain.UserAccounts.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,58 +106,14 @@ namespace PetPalsProfile.Infrastructure.Database.Migrations
                         });
                 });
 
-            modelBuilder.Entity("PetPalsProfile.Domain.UserAccounts.UserAccount", b =>
+            modelBuilder.Entity("PetPalsProfile.Domain.Accounts.Account", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("email");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("password_hash");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("role_id");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<string>("Username")
-                        .HasMaxLength(32)
-                        .HasColumnType("character varying(32)")
-                        .HasColumnName("username");
-
-                    b.HasKey("Id")
-                        .HasName("pk_user_account");
-
-                    b.HasIndex("RoleId")
-                        .HasDatabaseName("ix_user_account_role_id");
-
-                    b.ToTable("user_account", "identity");
-                });
-
-            modelBuilder.Entity("PetPalsProfile.Domain.UserAccounts.UserAccount", b =>
-                {
-                    b.HasOne("PetPalsProfile.Domain.Roles.Role", "Role")
+                    b.HasOne("PetPalsProfile.Domain.UserAccounts.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_user_account_role_role_id");
+                        .HasConstraintName("fk_account_role_role_id");
 
                     b.Navigation("Role");
                 });

@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using PetPalsProfile.Domain.Accounts;
 using PetPalsProfile.Domain.UserAccounts;
 
 namespace PetPalsProfile.Infrastructure.Authentication;
@@ -10,7 +11,7 @@ namespace PetPalsProfile.Infrastructure.Authentication;
 
 public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
 {
-    public string GenerateToken(UserAccount user)
+    public string GenerateToken(Account user)
     {
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Value.Secret)),

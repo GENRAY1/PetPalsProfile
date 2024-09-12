@@ -1,6 +1,6 @@
 using PetPalsProfile.Domain.Absractions;
 
-namespace PetPalsProfile.Domain.Roles;
+namespace PetPalsProfile.Domain.UserAccounts;
 
 public class Role(Guid id) : Entity(id)
 {
