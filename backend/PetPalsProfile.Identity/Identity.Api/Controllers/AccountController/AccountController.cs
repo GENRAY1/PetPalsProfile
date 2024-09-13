@@ -32,7 +32,7 @@ public class AccountController(ISender sender) : ControllerBase
     public async Task<ActionResult> Register(
         [FromBody] RegisterAccountRequest request,
         CancellationToken cancellationToken)
-    {
+    { 
         await sender.Send(new RegisterAccountCommand
         {
             Email = request.Email,
