@@ -20,4 +20,8 @@
       <ProjectReference Include="..\Profile.Infrastructure\Profile.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Controllers\Common\" />
+    </ItemGroup>
+
 </Project>

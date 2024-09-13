@@ -57,8 +57,8 @@ internal sealed class ExceptionHandlingMiddleware
 			_ => new ExceptionDetails(
 				StatusCodes.Status500InternalServerError,
 				"ServerError",
-				"Server error",
-				"An unexpected error has occurred",
+				"Default error",
+				exception.Message,
 				null)
 		};
 	}

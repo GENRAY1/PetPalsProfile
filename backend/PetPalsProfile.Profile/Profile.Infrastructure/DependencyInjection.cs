@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Profile.Domain.Abstractions;
 using Profile.Infrastructure.Database;
 using Profile.Infrastructure.Repositories;
@@ -22,7 +23,10 @@ public static class DependencyInjection
                                   throw new ArgumentNullException(nameof(configuration));
 
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention());
+            options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention()
+                .EnableSensitiveDataLogging() // Включает логирование чувствительных данных
+                .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information) // Логирование команд базы данных в консоль
+                .EnableDetailedErrors()); // Включает подробные ошибки
         
         services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
