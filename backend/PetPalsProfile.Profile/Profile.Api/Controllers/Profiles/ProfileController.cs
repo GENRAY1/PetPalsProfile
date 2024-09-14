@@ -9,7 +9,7 @@ using Profile.Application.Profile.Search;
 namespace Profile.Api.Controllers.Profiles;
 
 [ApiController]
-[Route("api/profiles")]
+[Route("profiles")]
 public class ProfileController(ISender sender) : ControllerBase
 {
     [HttpPost]
