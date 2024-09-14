@@ -19,7 +19,7 @@ public class GetLoggedAccountQueryHandler(
         return new GetLoggedAccountResponse()
         {
             Id = userAccount.Id,
-            Username = userAccount.Username,
+            Phone = userAccount.Phone,
             Email = userAccount.Email,
             Role = new RoleResponse()
             {

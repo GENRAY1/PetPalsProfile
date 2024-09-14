@@ -26,7 +26,7 @@ public class RegisterAccountCommandHandler(
         var newAccount = Domain.Accounts.Account.Create(
             email: request.Email,
             passwordHash: passwordHash,
-            username:request.Username);
+            phone:request.Phone);
         
         accountRepository.Add(newAccount);
 

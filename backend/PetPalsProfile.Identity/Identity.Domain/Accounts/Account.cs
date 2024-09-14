@@ -8,11 +8,11 @@ public class Account : Entity
     public const int MaxEmailLength = 256;
     public const int MaxPasswordLength = 64;
     public const int MinPasswordLength = 6;
-    public const int MinUserNameLength = 6;
-    public const int MaxUserNameLength = 32;
+    
+    public const int MaxPhoneLength = 32;
 
     private Account(Guid id) : base(id) { }
-    public string? Username { get; private set; }
+    public string? Phone { get; private set; }
     public string Email { get; private set; }
     public string PasswordHash { get; private set; }
     public DateTime CreatedAt { get; private set; }
@@ -20,7 +20,7 @@ public class Account : Entity
     public Guid RoleId { get; private set; }
     public Role Role { get; private set; }
 
-    public static Account Create(string email, string passwordHash, string? username)
+    public static Account Create(string email, string passwordHash, string? phone)
     {
         return new Account(Guid.NewGuid())
         {
@@ -28,7 +28,7 @@ public class Account : Entity
             PasswordHash = passwordHash,
             CreatedAt = DateTime.UtcNow,
             RoleId = Role.User.Id,
-            Username = username
+            Phone = phone
         };
     }
 }

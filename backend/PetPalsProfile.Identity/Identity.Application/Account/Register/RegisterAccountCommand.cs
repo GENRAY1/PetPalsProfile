@@ -6,5 +6,5 @@ public class RegisterAccountCommand : IRequest
 {
     public required string Email { get; init; }
     public required string Password { get; init; }
-    public string? Username { get; init; }
+    public string? Phone { get; init; }
 }

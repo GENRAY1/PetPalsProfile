@@ -37,7 +37,7 @@ public class AccountController(ISender sender) : ControllerBase
         {
             Email = request.Email,
             Password = request.Password,
-            Username = request.UserName
+            Phone = request.Phone
         }, cancellationToken);
 
         return Ok();

@@ -11,8 +11,8 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
     {
         builder.HasKey(u => u.Id);
 
-        builder.Property(u => u.Username)
-            .HasMaxLength(Account.MaxUserNameLength);
+        builder.Property(u => u.Phone)
+            .HasMaxLength(Account.MaxPhoneLength);
         
         builder.Property(u => u.Email)
             .IsRequired()
