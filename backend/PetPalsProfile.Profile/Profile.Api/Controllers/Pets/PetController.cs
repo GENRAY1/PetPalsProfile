@@ -12,7 +12,7 @@ using Profile.Application.Pets.Update;
 namespace Profile.Api.Controllers.Pets;
 
 [ApiController]
-[Route("api/pets")]
+[Route("pets")]
 public class PetController : ControllerBase
 {
     private readonly ISender _sender;
