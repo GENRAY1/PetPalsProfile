@@ -17,6 +17,26 @@ namespace PetPalsProfile.Infrastructure.Database.Migrations
                 name: "identity");
 
             migrationBuilder.CreateTable(
+                name: "account",
+                schema: "identity",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    phone = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: true),
+                    email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    password_hash = table.Column<string>(type: "text", nullable: false),
+                    refresh_token_value = table.Column<string>(type: "text", nullable: true),
+                    refresh_token_expiration_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    refresh_token_is_active = table.Column<bool>(type: "boolean", nullable: true),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_account", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "role",
                 schema: "identity",
                 columns: table => new
@@ -31,26 +51,25 @@ namespace PetPalsProfile.Infrastructure.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "account",
+                name: "account_role",
                 schema: "identity",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    phone = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: true),
-                    email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    password_hash = table.Column<string>(type: "text", nullable: false),
-                    refresh_token_value = table.Column<string>(type: "text", nullable: true),
-                    refresh_token_expiration_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    refresh_token_is_active = table.Column<bool>(type: "boolean", nullable: true),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    account_id = table.Column<Guid>(type: "uuid", nullable: false),
                     role_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_account", x => x.id);
+                    table.PrimaryKey("pk_account_role", x => new { x.account_id, x.role_id });
                     table.ForeignKey(
-                        name: "fk_account_role_role_id",
+                        name: "fk_account_role_account_account_id",
+                        column: x => x.account_id,
+                        principalSchema: "identity",
+                        principalTable: "account",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_account_role_role_role_id",
                         column: x => x.role_id,
                         principalSchema: "identity",
                         principalTable: "role",
@@ -69,15 +88,19 @@ namespace PetPalsProfile.Infrastructure.Database.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_account_role_id",
+                name: "ix_account_role_role_id",
                 schema: "identity",
-                table: "account",
+                table: "account_role",
                 column: "role_id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "account_role",
+                schema: "identity");
+
             migrationBuilder.DropTable(
                 name: "account",
                 schema: "identity");

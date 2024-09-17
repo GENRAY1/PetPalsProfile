@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PetPalsProfile.Domain.UserAccounts;
+using PetPalsProfile.Domain.Accounts;
 
 namespace PetPalsProfile.Infrastructure.Database.Configurations;
 

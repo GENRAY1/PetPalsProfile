@@ -12,7 +12,7 @@ using PetPalsProfile.Infrastructure.Database;
 namespace PetPalsProfile.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240915133652_Initial")]
+    [Migration("20240917094150_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -53,10 +53,6 @@ namespace PetPalsProfile.Infrastructure.Database.Migrations
                         .HasColumnType("character varying(32)")
                         .HasColumnName("phone");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("role_id");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
@@ -64,13 +60,29 @@ namespace PetPalsProfile.Infrastructure.Database.Migrations
                     b.HasKey("Id")
                         .HasName("pk_account");
 
-                    b.HasIndex("RoleId")
-                        .HasDatabaseName("ix_account_role_id");
-
                     b.ToTable("account", "identity");
                 });
 
-            modelBuilder.Entity("PetPalsProfile.Domain.UserAccounts.Role", b =>
+            modelBuilder.Entity("PetPalsProfile.Domain.Accounts.AccountRole", b =>
+                {
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("account_id");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("role_id");
+
+                    b.HasKey("AccountId", "RoleId")
+                        .HasName("pk_account_role");
+
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_account_role_role_id");
+
+                    b.ToTable("account_role", "identity");
+                });
+
+            modelBuilder.Entity("PetPalsProfile.Domain.Accounts.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -111,13 +123,6 @@ namespace PetPalsProfile.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("PetPalsProfile.Domain.Accounts.Account", b =>
                 {
-                    b.HasOne("PetPalsProfile.Domain.UserAccounts.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_account_role_role_id");
-
                     b.OwnsOne("PetPalsProfile.Domain.Accounts.AccountRefreshToken", "RefreshToken", b1 =>
                         {
                             b1.Property<Guid>("AccountId")
@@ -147,8 +152,23 @@ namespace PetPalsProfile.Infrastructure.Database.Migrations
                         });
 
                     b.Navigation("RefreshToken");
+                });
 
-                    b.Navigation("Role");
+            modelBuilder.Entity("PetPalsProfile.Domain.Accounts.AccountRole", b =>
+                {
+                    b.HasOne("PetPalsProfile.Domain.Accounts.Account", null)
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_account_role_account_account_id");
+
+                    b.HasOne("PetPalsProfile.Domain.Accounts.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_account_role_role_role_id");
                 });
 #pragma warning restore 612, 618
         }

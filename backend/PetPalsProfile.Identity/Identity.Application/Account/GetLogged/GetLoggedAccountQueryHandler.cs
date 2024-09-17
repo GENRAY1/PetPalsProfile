@@ -1,6 +1,5 @@
 using MediatR;
 using PetPalsProfile.Domain.Accounts;
-using PetPalsProfile.Domain.UserAccounts;
 
 namespace PetPalsProfile.Application.Account.GetLogged;
 
@@ -21,12 +20,12 @@ public class GetLoggedAccountQueryHandler(
             Id = userAccount.Id,
             Phone = userAccount.Phone,
             Email = userAccount.Email,
-            Role = new RoleResponse()
+            Role = userAccount.Roles.Select(role => new RoleResponse
             {
-                Id = userAccount.Role.Id,
-                Name = userAccount.Role.Name,
-                Localization = userAccount.Role.Localization
-            }
+                Id = role.Id,
+                Name = role.Name,
+                Localization = role.Localization
+            }).ToList()
         };
     }
 }

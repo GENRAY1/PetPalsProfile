@@ -10,7 +10,6 @@ using PetPalsProfile.Application.Abstractions.Authentication;
 using PetPalsProfile.Application.Abstractions.PasswordManager;
 using PetPalsProfile.Domain.Absractions;
 using PetPalsProfile.Domain.Accounts;
-using PetPalsProfile.Domain.UserAccounts;
 using PetPalsProfile.Infrastructure.Authentication;
 using PetPalsProfile.Infrastructure.Database;
 using PetPalsProfile.Infrastructure.Repositories;

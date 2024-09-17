@@ -1,3 +1,4 @@
+using System.Collections;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -21,17 +22,23 @@ public class JwtProvider(
             algorithm: SecurityAlgorithms.RsaSha256
         );
 
+        List<Claim> claims = new List<Claim>
+        {
+            new (ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new (ClaimTypes.Email, user.Email),
+        };
+        
+        foreach (var role in user.Roles)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role.Name));
+        }
+        
         var token = new JwtSecurityToken(
             signingCredentials: signingCredentials,
             expires: DateTime.UtcNow.AddMinutes(options.Value.AccessTokenSettings.LifeTimeInMinutes),
             audience: options.Value.AccessTokenSettings.Audience,
             issuer: options.Value.AccessTokenSettings.Issuer,
-            claims: new List<Claim>
-            {
-                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new(ClaimTypes.Email, user.Email),
-                new(ClaimTypes.Role, user.Role.Name)
-            }
+            claims: claims
         );
 
         var tokenString = new JwtSecurityTokenHandler().WriteToken(token);

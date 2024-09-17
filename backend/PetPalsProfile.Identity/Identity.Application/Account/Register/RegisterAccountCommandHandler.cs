@@ -1,7 +1,6 @@
 using MediatR;
 using PetPalsProfile.Domain.Absractions;
 using PetPalsProfile.Domain.Accounts;
-using PetPalsProfile.Domain.UserAccounts;
 using IPasswordManager = PetPalsProfile.Application.Abstractions.PasswordManager.IPasswordManager;
 
 namespace PetPalsProfile.Application.Account.Register;

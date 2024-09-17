@@ -1,5 +1,4 @@
 using PetPalsProfile.Domain.Absractions;
-using PetPalsProfile.Domain.UserAccounts;
 
 namespace PetPalsProfile.Domain.Accounts;
 
@@ -8,23 +7,44 @@ public class Account : Entity
     public const int MaxEmailLength = 256;
     public const int MaxPasswordLength = 64;
     public const int MinPasswordLength = 6;
-    
     public const int MaxPhoneLength = 32;
 
-    private Account(Guid id) : base(id) { }
+    private List<Role> _roles = new();
+
+    private Account(Guid id) : base(id)
+    {
+    }
+
+    private Account()
+    {
+    }
+
     public string? Phone { get; private set; }
     public string Email { get; private set; }
     public string PasswordHash { get; private set; }
     public AccountRefreshToken? RefreshToken { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public DateTime? UpdatedAt { get; private set; }
-    public Guid RoleId { get; private set; }
-    public Role Role { get; private set; }
+    public IReadOnlyCollection<Role> Roles => _roles;
+
+    public void AddRole(Role role)
+    {
+        if (!_roles.Contains(role))
+        {
+            _roles.Add(role);
+        }
+    }
+
+    public void RemoveRole(Role role)
+    {
+        _roles.Remove(role);
+    }
 
     public void SetRefreshToken(AccountRefreshToken refreshToken)
     {
         RefreshToken = refreshToken;
     }
+
     public void DisableRefreshToken()
     {
         if (RefreshToken is not null)
@@ -32,25 +52,19 @@ public class Account : Entity
             RefreshToken.IsActive = false;
         }
     }
-    
-    public void ActivateRefreshToken()
-    {
-        if (RefreshToken is not null)
-        {
-            RefreshToken.IsActive = true;
-        }
-    }
-    
 
     public static Account Create(string email, string passwordHash, string? phone)
     {
-        return new Account(Guid.NewGuid())
+        Account account = new Account(Guid.NewGuid())
         {
             Email = email,
             PasswordHash = passwordHash,
             CreatedAt = DateTime.UtcNow,
-            RoleId = Role.User.Id,
             Phone = phone
         };
+        
+        account.AddRole(Role.User);
+        
+        return account;
     }
 }

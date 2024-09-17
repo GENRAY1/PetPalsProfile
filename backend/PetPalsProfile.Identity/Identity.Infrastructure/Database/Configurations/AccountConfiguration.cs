@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetPalsProfile.Domain.Accounts;
-using PetPalsProfile.Domain.UserAccounts;
 
 namespace PetPalsProfile.Infrastructure.Database.Configurations;
 
@@ -26,9 +25,9 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
 
         builder.Property(u => u.UpdatedAt);
         
-        builder.HasOne(u => u.Role)
+        builder.HasMany(u => u.Roles)
             .WithMany()
-            .HasForeignKey(u => u.RoleId);
+            .UsingEntity<AccountRole>();
         
         builder.OwnsOne(u => u.RefreshToken);
     }
