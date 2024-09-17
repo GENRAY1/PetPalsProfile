@@ -1,37 +1,108 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using PetPalsProfile.Application.Abstractions.Authentication;
 using PetPalsProfile.Domain.Accounts;
-using PetPalsProfile.Domain.UserAccounts;
 
 namespace PetPalsProfile.Infrastructure.Authentication;
 
-
-public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
+public class JwtProvider(
+    IOptions<JwtOptions> options,
+    RsaSecurityKey rsaSecurityKey
+) : IJwtProvider
 {
-    public string GenerateToken(Account user)
+    public string GenerateAccessToken(Account user)
     {
         var signingCredentials = new SigningCredentials(
-            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Value.Secret)),
-            SecurityAlgorithms.HmacSha256);
+            key: rsaSecurityKey,
+            algorithm: SecurityAlgorithms.RsaSha256
+        );
 
         var token = new JwtSecurityToken(
             signingCredentials: signingCredentials,
-            expires: DateTime.UtcNow.AddHours(options.Value.ExpireHours),
-            audience: options.Value.Audience,
-            issuer: options.Value.Issuer,
+            expires: DateTime.UtcNow.AddMinutes(options.Value.AccessTokenSettings.LifeTimeInMinutes),
+            audience: options.Value.AccessTokenSettings.Audience,
+            issuer: options.Value.AccessTokenSettings.Issuer,
             claims: new List<Claim>
             {
                 new(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new(ClaimTypes.Email, user.Email),
-                new(ClaimTypes.Role, user.RoleId.ToString())
+                new(ClaimTypes.Role, user.Role.Name)
             }
         );
-        
+
         var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-        
+
         return tokenString;
+    }
+
+    public string GenerateRefreshToken()
+    {
+        var size = options.Value.RefreshTokenSettings.Length;
+        var buffer = new byte[size];
+        RandomNumberGenerator.Fill(buffer);
+        return Convert.ToBase64String(buffer);
+    }
+
+    public int GetRefreshTokenLifetimeInMinutes()
+    {
+        return options.Value.RefreshTokenSettings.LifeTimeInMinutes;
+    }
+
+    public Guid GetUserIdFromToken(string token)
+    {
+        try
+        {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = options.Value.AccessTokenSettings.Issuer,
+                ValidAudience = options.Value.AccessTokenSettings.Audience,
+                IssuerSigningKey = rsaSecurityKey,
+                ClockSkew = TimeSpan.FromMinutes(0)
+            };
+
+            var jwtHandler = new JwtSecurityTokenHandler();
+            var claims = jwtHandler.ValidateToken(token, tokenValidationParameters, out _);
+            var userId = Guid.Parse(claims.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            return userId;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Invalid token", ex);
+        }
+    }
+
+    public bool IsTokenValid(string token)
+    {
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = false,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = options.Value.AccessTokenSettings.Issuer,
+            ValidAudience = options.Value.AccessTokenSettings.Audience,
+            IssuerSigningKey = rsaSecurityKey,
+            ClockSkew = TimeSpan.FromMinutes(0)
+        };
+
+        var jwtHandler = new JwtSecurityTokenHandler();
+        try
+        {
+            jwtHandler.ValidateToken(token, tokenValidationParameters, out _);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

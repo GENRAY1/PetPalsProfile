@@ -15,10 +15,32 @@ public class Account : Entity
     public string? Phone { get; private set; }
     public string Email { get; private set; }
     public string PasswordHash { get; private set; }
+    public AccountRefreshToken? RefreshToken { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public DateTime? UpdatedAt { get; private set; }
     public Guid RoleId { get; private set; }
     public Role Role { get; private set; }
+
+    public void SetRefreshToken(AccountRefreshToken refreshToken)
+    {
+        RefreshToken = refreshToken;
+    }
+    public void DisableRefreshToken()
+    {
+        if (RefreshToken is not null)
+        {
+            RefreshToken.IsActive = false;
+        }
+    }
+    
+    public void ActivateRefreshToken()
+    {
+        if (RefreshToken is not null)
+        {
+            RefreshToken.IsActive = true;
+        }
+    }
+    
 
     public static Account Create(string email, string passwordHash, string? phone)
     {

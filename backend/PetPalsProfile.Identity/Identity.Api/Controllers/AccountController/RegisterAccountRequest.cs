@@ -1,4 +1,4 @@
-namespace PetPalsProfile.Api.Controllers.AccountController.RegisterAccount;
+namespace PetPalsProfile.Api.Controllers.AccountController;
 
 public class RegisterAccountRequest
 {

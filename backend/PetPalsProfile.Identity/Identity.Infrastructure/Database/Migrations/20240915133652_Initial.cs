@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace PetPalsProfile.Infrastructure.Migrations
+namespace PetPalsProfile.Infrastructure.Database.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -36,9 +36,12 @@ namespace PetPalsProfile.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    username = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: true),
+                    phone = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: true),
                     email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     password_hash = table.Column<string>(type: "text", nullable: false),
+                    refresh_token_value = table.Column<string>(type: "text", nullable: true),
+                    refresh_token_expiration_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    refresh_token_is_active = table.Column<bool>(type: "boolean", nullable: true),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     role_id = table.Column<Guid>(type: "uuid", nullable: false)

@@ -12,6 +12,7 @@ public class AccountRepository(ApplicationDbContext context)
     {
         return await context
             .Set<Account>()
+            .Include(account => account.Role)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
     }
@@ -25,10 +26,23 @@ public class AccountRepository(ApplicationDbContext context)
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
+    public async Task<Account?> GetByRefreshToken(string refreshToken, CancellationToken cancellationToken)
+    {
+        return await context
+            .Set<Account>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.RefreshToken!.Value == refreshToken, cancellationToken);
+    }
+
     public void Add(Account account)
     {
-        context
-            .Set<Account>()
+        context.Set<Account>()
             .Add(account);
+    }
+
+    public void Update(Account account)
+    {
+        context.Set<Account>()
+            .Update(account);
     }
 }

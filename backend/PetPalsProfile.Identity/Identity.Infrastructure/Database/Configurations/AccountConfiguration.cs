@@ -29,5 +29,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.HasOne(u => u.Role)
             .WithMany()
             .HasForeignKey(u => u.RoleId);
+        
+        builder.OwnsOne(u => u.RefreshToken);
     }
 }

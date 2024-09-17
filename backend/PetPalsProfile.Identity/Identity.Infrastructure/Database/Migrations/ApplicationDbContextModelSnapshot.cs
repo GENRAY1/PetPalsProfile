@@ -2,21 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PetPalsProfile.Infrastructure.Database;
 
 #nullable disable
 
-namespace PetPalsProfile.Infrastructure.Migrations
+namespace PetPalsProfile.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240912132717_Initial")]
-    partial class Initial
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,6 +45,11 @@ namespace PetPalsProfile.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("password_hash");
 
+                    b.Property<string>("Phone")
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("phone");
+
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid")
                         .HasColumnName("role_id");
@@ -55,11 +57,6 @@ namespace PetPalsProfile.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
-
-                    b.Property<string>("Username")
-                        .HasMaxLength(32)
-                        .HasColumnType("character varying(32)")
-                        .HasColumnName("username");
 
                     b.HasKey("Id")
                         .HasName("pk_account");
@@ -117,6 +114,36 @@ namespace PetPalsProfile.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_account_role_role_id");
+
+                    b.OwnsOne("PetPalsProfile.Domain.Accounts.AccountRefreshToken", "RefreshToken", b1 =>
+                        {
+                            b1.Property<Guid>("AccountId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("id");
+
+                            b1.Property<DateTime>("ExpirationDate")
+                                .HasColumnType("timestamp with time zone")
+                                .HasColumnName("refresh_token_expiration_date");
+
+                            b1.Property<bool>("IsActive")
+                                .HasColumnType("boolean")
+                                .HasColumnName("refresh_token_is_active");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("refresh_token_value");
+
+                            b1.HasKey("AccountId");
+
+                            b1.ToTable("account", "identity");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AccountId")
+                                .HasConstraintName("fk_account_account_id");
+                        });
+
+                    b.Navigation("RefreshToken");
 
                     b.Navigation("Role");
                 });
