@@ -11,7 +11,7 @@ using PetPalsProfile.Application.Account.Register;
 namespace PetPalsProfile.Api.Controllers.AccountController;
 
 [ApiController]
-[Route("api/[action]")]
+[Route("identity/[action]")]
 public class AccountController(ISender sender) : ControllerBase
 {
     [HttpPost]
