@@ -1,5 +1,3 @@
-using PetPalsProfile.Domain.UserAccounts;
-
 namespace PetPalsProfile.Domain.Accounts;
 
 public interface IAccountRepository
@@ -8,4 +6,6 @@ public interface IAccountRepository
     Task <Account?> GetById(Guid id, CancellationToken cancellationToken);
 
     void Add(Account account);
+    
+    void Update(Account account);
 }

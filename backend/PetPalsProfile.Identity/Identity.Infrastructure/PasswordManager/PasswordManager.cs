@@ -1,3 +1,5 @@
+using PetPalsProfile.Application.Abstractions.PasswordManager;
+
 namespace PetPalsProfile.Infrastructure.PasswordManager;
 
 public class PasswordManager : IPasswordManager

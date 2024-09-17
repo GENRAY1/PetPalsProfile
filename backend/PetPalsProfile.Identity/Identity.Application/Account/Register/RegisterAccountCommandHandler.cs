@@ -1,20 +1,17 @@
 using MediatR;
-using Microsoft.Extensions.Logging;
 using PetPalsProfile.Domain.Absractions;
 using PetPalsProfile.Domain.Accounts;
-using PetPalsProfile.Domain.UserAccounts;
-using PetPalsProfile.Infrastructure.PasswordManager;
+using IPasswordManager = PetPalsProfile.Application.Abstractions.PasswordManager.IPasswordManager;
 
 namespace PetPalsProfile.Application.Account.Register;
 
 public class RegisterAccountCommandHandler(
     IPasswordManager passwordManager,
     IAccountRepository accountRepository,
-    IUnitOfWork unitOfWork,
-    ILogger<RegisterAccountCommandHandler> logger)
-    :IRequestHandler<RegisterAccountCommand>
+    IUnitOfWork unitOfWork)
+    :IRequestHandler<RegisterAccountCommand, RegisterAccountResponse>
 {
-    public async Task Handle(RegisterAccountCommand request, CancellationToken cancellationToken)
+    public async Task<RegisterAccountResponse> Handle(RegisterAccountCommand request, CancellationToken cancellationToken)
     {
         var passwordHash = passwordManager.Generate(request.Password);
 
@@ -26,10 +23,15 @@ public class RegisterAccountCommandHandler(
         var newAccount = Domain.Accounts.Account.Create(
             email: request.Email,
             passwordHash: passwordHash,
-            username:request.Username);
+            phone:request.Phone);
         
         accountRepository.Add(newAccount);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        
+        return new RegisterAccountResponse
+        {
+            Id = newAccount.Id
+        };
     }
 }

@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
-using PetPalsProfile.Infrastructure.Authentication;
-using PetPalsProfile.Infrastructure.PasswordManager;
+using PetPalsProfile.Application.Abstractions.Authentication;
+using PetPalsProfile.Application.Abstractions.PasswordManager;
 
 namespace PetPalsProfile.Application;
 
@@ -12,9 +12,6 @@ public static class DependencyInjection
         {
             configuration.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
         });
-        
-        services.AddSingleton<IPasswordManager, PasswordManager>();
-        services.AddSingleton<IJwtProvider, JwtProvider>();
 
         return services;
     }

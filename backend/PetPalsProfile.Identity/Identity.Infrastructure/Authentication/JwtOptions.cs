@@ -2,8 +2,22 @@ namespace PetPalsProfile.Infrastructure.Authentication;
 
 public class JwtOptions
 {
-    public string Secret { get; set; } = string.Empty;
-    public string Audience { get; set; } = string.Empty;
-    public string Issuer { get; set; } = string.Empty;
-    public int ExpireHours { get; set; }
+    public AccessTokenSettings AccessTokenSettings { get; set; }
+    public RefreshTokenSettings RefreshTokenSettings { get; set; }
+}
+
+public class AccessTokenSettings
+{
+    public string Issuer { get; set; }
+    public string Audience { get; set; }
+    public long LifeTimeInMinutes { get; set; }
+    
+    public string PublicKey { get; set; }
+    public string PrivateKey { get; set; }
+}
+
+public class RefreshTokenSettings
+{
+    public int Length { get; set; }
+    public int LifeTimeInMinutes { get; set; }
 }
