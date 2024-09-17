@@ -1,5 +1,7 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Profile.Api.Common;
 using Profile.Application.Common;
 using Profile.Application.Pets.Create;
 using Profile.Application.Pets.Get;
@@ -8,6 +10,7 @@ using Profile.Application.Pets.PetTypes.Delete;
 using Profile.Application.Pets.PetTypes.GetAll;
 using Profile.Application.Pets.Search;
 using Profile.Application.Pets.Update;
+using Profile.Infrastructure.Authorization;
 
 namespace Profile.Api.Controllers.Pets;
 
@@ -22,6 +25,7 @@ public class PetController : ControllerBase
         _sender = sender;
     }
 
+    [RoleAuthorize(Roles.User)]
     [HttpPost]
     public async Task<ActionResult<CreatePetDtoResponse>> CreatePet(
         [FromBody] CreatePetRequest request,
@@ -44,6 +48,7 @@ public class PetController : ControllerBase
         return Ok(response);
     }
 
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public async Task<ActionResult<GetPetDtoResponse>> GetPetById(
         [FromRoute] Guid id,
@@ -55,7 +60,8 @@ public class PetController : ControllerBase
 
         return Ok(response);
     }
-
+    
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<ListDtoResponse<SearchPetDtoResponse>>> GetPets(
         [FromQuery] SearchPetsRequest request,
@@ -72,6 +78,7 @@ public class PetController : ControllerBase
         return Ok(response);
     }
 
+    [RoleAuthorize(Roles.User)]
     [HttpPatch("{id}")]
     public async Task<ActionResult> ChangePet(
         [FromRoute] Guid id,
@@ -94,7 +101,8 @@ public class PetController : ControllerBase
 
         return NoContent();
     }
-
+    
+    [RoleAuthorize(Roles.Admin)]
     [HttpPost("types")]
     public async Task<ActionResult<CreatePetTypeDtoResponse>> CreatePetType(
         [FromBody] CreatePetTypeRequest request,
@@ -109,7 +117,8 @@ public class PetController : ControllerBase
 
         return Ok(response);
     }
-
+    
+    [AllowAnonymous]
     [HttpGet("types")]
     public async Task<ActionResult<IReadOnlyCollection<IdNamePairDtoResponse>>> GetPetTypes(
         CancellationToken cancellationToken)
@@ -121,6 +130,7 @@ public class PetController : ControllerBase
         return Ok(response);
     }
 
+    [RoleAuthorize(Roles.User)]
     [HttpDelete("types/{id}")]
     public async Task<ActionResult> DeletePetType(
         [FromRoute] Guid id,

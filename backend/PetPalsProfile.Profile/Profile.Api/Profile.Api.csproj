@@ -14,14 +14,12 @@
         </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
+    
 
     <ItemGroup>
       <ProjectReference Include="..\Profile.Application\Profile.Application.csproj" />
+      <ProjectReference Include="..\Profile.Domain\Profile.Domain.csproj" />
       <ProjectReference Include="..\Profile.Infrastructure\Profile.Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Controllers\Common\" />
     </ItemGroup>
 
 </Project>

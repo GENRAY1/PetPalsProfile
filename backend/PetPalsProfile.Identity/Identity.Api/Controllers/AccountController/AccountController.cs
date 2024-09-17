@@ -11,7 +11,7 @@ using PetPalsProfile.Application.Account.Register;
 namespace PetPalsProfile.Api.Controllers.AccountController;
 
 [ApiController]
-[Route("identity/[action]")]
+[Route("[action]")]
 public class AccountController(ISender sender) : ControllerBase
 {
     [AllowAnonymous]
@@ -28,7 +28,7 @@ public class AccountController(ISender sender) : ControllerBase
 
         return Ok(loginResponse);
     }
-
+    
     [AllowAnonymous]
     [HttpPost]
     public async Task<ActionResult> RefreshToken(
