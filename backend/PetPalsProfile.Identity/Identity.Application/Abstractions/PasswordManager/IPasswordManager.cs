@@ -1,4 +1,4 @@
-namespace PetPalsProfile.Infrastructure.PasswordManager;
+namespace PetPalsProfile.Application.Abstractions.PasswordManager;
 
 public interface IPasswordManager
 {

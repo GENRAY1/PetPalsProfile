@@ -1,10 +1,13 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Profile.Api.Common;
 using Profile.Application.Common;
 using Profile.Application.Profile.Change;
 using Profile.Application.Profile.Create;
 using Profile.Application.Profile.Get;
 using Profile.Application.Profile.Search;
+using Profile.Infrastructure.Authorization;
 
 namespace Profile.Api.Controllers.Profiles;
 
@@ -12,6 +15,7 @@ namespace Profile.Api.Controllers.Profiles;
 [Route("profiles")]
 public class ProfileController(ISender sender) : ControllerBase
 {
+    [RoleAuthorize(Roles.User)]
     [HttpPost]
     public async Task<ActionResult<CreateProfileDtoResponse>> CreateProfile(
         [FromBody] CreateProfileRequest request,
@@ -32,6 +36,7 @@ public class ProfileController(ISender sender) : ControllerBase
         return Ok(response);
     }
 
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public async Task<ActionResult<GetProfileDtoResponse>> GetProfileById(
         [FromRoute] Guid id,
@@ -44,6 +49,7 @@ public class ProfileController(ISender sender) : ControllerBase
         return Ok(response);
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<ListDtoResponse<SearchProfileDtoResponse>>> GetProfiles(
         [FromQuery] SearchProfileRequest request,
@@ -56,6 +62,7 @@ public class ProfileController(ISender sender) : ControllerBase
         return Ok(response);
     }
 
+    [RoleAuthorize(Roles.User)]
     [HttpPatch("{id}")]
     public async Task<ActionResult> ChangeProfile(
         [FromRoute] Guid id,

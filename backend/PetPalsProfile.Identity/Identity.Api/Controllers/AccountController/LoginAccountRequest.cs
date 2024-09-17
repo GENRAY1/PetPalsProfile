@@ -1,4 +1,4 @@
-namespace PetPalsProfile.Api.Controllers.AccountController.LoginAccount;
+namespace PetPalsProfile.Api.Controllers.AccountController;
 
 public class LoginAccountRequest
 {

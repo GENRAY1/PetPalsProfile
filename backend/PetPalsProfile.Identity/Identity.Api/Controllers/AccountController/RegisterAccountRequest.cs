@@ -1,4 +1,4 @@
-namespace PetPalsProfile.Api.Controllers.AccountController.RegisterAccount;
+namespace PetPalsProfile.Api.Controllers.AccountController;
 
 public class RegisterAccountRequest
 {
@@ -6,5 +6,5 @@ public class RegisterAccountRequest
     
     public required string Password { get; init; }
     
-    public string? UserName { get; init; }
+    public string? Phone { get; init; }
 }
